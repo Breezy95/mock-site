@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+option go_package = "github.com/Breezy95/website/proto/front_to_back";
+
+package front_to_back;

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option go_package = "github.com/Breezy95/website/proto/node_to_node";
+
+package proto;
+
+service raftTransport{
+
+    rpc Reqvote(VoteRequest) returns (VoteReqResponse){}
+
+    rpc AppendEntry(AppendRequest) returns (AppendReqResponse){}
+}

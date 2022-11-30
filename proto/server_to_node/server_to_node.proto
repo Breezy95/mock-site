@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+option go_package = "github.com/Breezy95/website/proto/server_to_node";
+
+package server_to_node;
+
+service Backend_info {
+
+    //send new Acct_info to raft nodes
+    rpc Acct_info(Acct_name) returns (Acct_inf) {}
+
+    //send post info with linked Acct
+    rpc Send_post(Post) returns (Post_succ) {}
+
+    //add acct to nodes
+    rpc Add_acct(Acct) returns (Acct_succ) {}
+
+    rpc Get_feed(Post) returns (stream Feed) {}
+    
+}
+
+message Acct_name {
+    string name=1;
+}
+
+message Acct {
+    string username = 1;
+    string passwd = 2;
+}
+
+message Acct_inf {
+    string date_of_Creation = 1;
+    string name = 2;
+    string last_post = 3;
+    repeated string posts = 4;
+}
+
+message Acct_succ {
+    bool success = 1;
+}
+
+message Post {
+    string date = 1;
+    Acct_name author = 2;
+    string body = 3;
+}
+
+message Post_succ {
+    bool success = 1;
+}
+
+message Page {
+
+    repeated Post posts = 1;
+
+}
+
+message Feed {
+    repeated Post posts =1;
+}
+
+
+

@@ -2,11 +2,92 @@ syntax = "proto3";
 
 option go_package = "github.com/Breezy95/website/proto/node_to_node";
 
-package proto;
+
 
 service raftTransport{
 
-    rpc Reqvote(VoteRequest) returns (VoteReqResponse){}
+    rpc Election(VoteRequest) returns (VoteReqResponse){}
 
-    rpc AppendEntry(AppendRequest) returns (AppendReqResponse){}
+    rpc AppendEntry(AppendEntriesRequest) returns (AppendEntriesResponse){}
+
+    rpc AppendEntriesStream(stream AppendEntriesRequest) returns (AppendEntriesResponse)  {}
+
+    rpc Timeout(TimeoutRequest) returns (TimeoutResponse) {}
+
+    rpc CreateSnap(CreateSnapRequest) returns (CreateSnapResponse) {}
+
+    rpc RestoreFromSnap(RestoreSnapRequest) returns (RestoreSnapResponse) {}
 }
+
+message RPCHeader {
+    uint64 ProtocolVersion = 1;
+    bytes ID = 2;
+    bytes Addr = 3;
+
+}
+
+message Payload {
+
+}
+
+message VoteRequest{
+    RPCHeader msg_header = 1;
+    uint64 term = 2;
+    bytes candidate = 3;
+    uint64 last_log_index = 4;
+    uint64 last_log_term = 5;
+    bool leadership_transfer = 6;
+
+}
+
+message VoteReqResponse {
+    RPCHeader msg_header = 1;
+    uint64 term = 2;
+    bytes peers = 3;
+    bool transferral = 4;
+}
+
+message TimeoutRequest{
+    RPCHeader msg_header = 1;
+}
+
+message TimeoutResponse {
+    RPCHeader msg_header =1;
+    bool success = 2;
+
+}
+
+
+message AppendEntriesRequest{
+    RPCHeader msg_header = 1;
+
+
+}
+
+message AppendEntriesResponse{
+    RPCHeader msg_header = 1;
+
+
+}
+
+message CreateSnapRequest{
+
+}
+
+message CreateSnapResponse{
+
+}
+
+message RestoreSnapRequest{
+
+}
+
+message RestoreSnapResponse{
+
+}
+
+
+
+
+
+

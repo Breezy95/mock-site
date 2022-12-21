@@ -86,7 +86,7 @@ func (us *UserStore) GetUser(username string) (User, error){
 	defer us.mu.Unlock()
 
 	user,succ := us.usermap[username]
-	if succ != true{
+	if !succ{
 		nil_user := User{}
 		return nil_user, fmt.Errorf("could not retrieve user with the key" + username)
 	}
